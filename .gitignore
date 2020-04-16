@@ -1,0 +1,12 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.DS_Store
+
+secret_keys.py
+venv
+.venv
+
+# Unit test
+.pytest_cache/
+
+*.pyc
