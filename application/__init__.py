@@ -18,6 +18,11 @@ def create_app(config_name):
 	app.logger.info('Connecting database')
 	db.init_app(app)
 
+	app.logger.info('creating Flask-Potion Apis')
+	from application import apis
+	api = Api(app, prefix='/api/v1', title='Backend API')
+	apis.create_api(api)
+
 	app.logger.info('Defining default URL')
 	@app.route('/')
 	def index():
