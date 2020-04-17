@@ -53,7 +53,10 @@ class TripResource(ModelResource):
         self,
         trip,
         classification: fields.Integer(nullable=False),
-        score: fields.Integer(nullable=False)):
+        score: fields.Integer(
+            nullable=False,
+            minimum=1,
+            maximum=5)):
         """List all trips of an User
 
         Returns:
