@@ -49,9 +49,12 @@ class Trip(db.Model):
     user_id = db.Column(
         db.Integer,
         db.ForeignKey('user.id'),
-        nullable=False)
+        nullable=False,
+        doc='ID do usuário que realizou a viagem')
 
-    user = db.relationship('User')
+    user = db.relationship(
+        'User',
+        doc='Instancia de User')
 
 
 class User(db.Model):
