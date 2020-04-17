@@ -1,11 +1,15 @@
 from application.models import Trip
 from application.models import User
 
-def get_headers():
-    header = {
-        'Content-Type': 'application/json',
+def get_headers(token=None):
+    headers = {
+        'Content-Type': 'application/json'
     }
-    return header
+
+    if token:
+        headers['Authorization'] = 'JWT {}'.format(token)
+
+    return headers
 
 def insert_object(session, obj):
     try:
@@ -22,6 +26,6 @@ def create_trip(session, **kwargs):
     return insert_object(session, obj)
 
 def create_user(session, **kwargs):
-    obj = Terminal(**kwargs)
+    obj = User(**kwargs)
 
     return insert_object(session, obj)

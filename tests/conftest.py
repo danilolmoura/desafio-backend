@@ -29,5 +29,5 @@ def test_client(app):
 @pytest.fixture(scope='function', autouse=True)
 def teardown(session):
     session.execute('DELETE FROM trip')
-    session.execute('DELETE FROM user')
+    session.execute('DELETE FROM "user"')
     session.commit()
