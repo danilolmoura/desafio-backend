@@ -22,26 +22,26 @@ class Trip(db.Model):
         primary_key=True,
         doc='id da viagem')
 
-    data_inicio = db.Column(
+    start_date = db.Column(
         db.DateTime(timezone=True),
         nullable=False,
         index=True,
         default=db.func.now(),
         doc='Data início da viagem')
 
-    data_fim = db.Column(
+    end_date = db.Column(
         db.DateTime(timezone=True),
         nullable=False,
         index=True,
         default=db.func.now(),
         doc='Data fim da viagem')
 
-    classificacao = db.Column(
+    classification = db.Column(
         types.Enum(EnumBikeTripType, name='enum_bike_trip_type'),
         nullable=True,
         doc=u'Classificacão da viagem')
 
-    nota = db.Column(
+    score = db.Column(
         db.Integer(),
         nullable=True,
         doc='Nota da viagem')

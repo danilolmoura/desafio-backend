@@ -13,6 +13,8 @@ from application import db
 
 from application.models import User
 
+
+
 def create_app(config_name):
     from flask_potion import Api
 
@@ -24,8 +26,6 @@ def create_app(config_name):
 
     app.logger.info('Setting authenticator')
     def authenticate(email, password):
-        import pdb
-        pdb.set_trace()
         user = User.query.filter_by(
             email=email
         ).first()
