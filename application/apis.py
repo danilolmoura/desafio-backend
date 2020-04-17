@@ -1,6 +1,7 @@
 from flask_potion import fields, ModelResource
 from flask_potion.routes import ItemRoute, Route
 from flask_jwt import jwt_required, current_identity
+from werkzeug.exceptions import Forbidden
 
 from application import db
 from application.models import Trip, User, EnumBikeTripType
@@ -22,7 +23,8 @@ class TripResource(ModelResource):
         """List all trips of an User
 
         Returns:
-            number: total of drivers without truckload
+            list(dict): List of dicts, where each item on the list
+                has information for each trip of the logged in user
         """
 
         trips = Trip.query.filter_by(
@@ -45,20 +47,34 @@ class TripResource(ModelResource):
 
         return result_trips
 
-    @ItemRoute.GET('/classify_trip')
+    @ItemRoute.POST('/rate_trip')
     @jwt_required()
-    def classify_trip(
+    def rate_trip(
         self,
         trip,
-        classificacao: fields.Integer(nullable=False),
-        nota: fields.Integer(nullable=False)):
+        classification: fields.Integer(nullable=False),
+        score: fields.Integer(nullable=False)):
         """List all trips of an User
 
         Returns:
-            number: total of drivers without truckload
+            boolean: True if values are set correctly
         """
 
-        pass
+        if trip.user_id != current_identity.id:
+            raise Forbidden(
+                'You are not allowed to rate this trip')
+
+        trip.classification = classification
+        trip.score = score
+
+        db.session.add(trip)
+        try:
+            db.session.commit()
+        except Exception as e:
+            logger.exception(e)
+            db.session.rollback()
+
+        return True
 
 def create_api(api):
     api.add_resource(TripResource)
