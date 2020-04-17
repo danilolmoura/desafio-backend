@@ -10,10 +10,7 @@ from config import config_by_name
 db = SQLAlchemy()
 
 from application import db
-
 from application.models import User
-
-
 
 def create_app(config_name):
     from flask_potion import Api
